@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkToFit – Itarsi's Premier Gym</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-deep: #1a4a2e;
+    --green-mid: #2d7a4f;
+    --green-bright: #3eb96a;
+    --green-light: #a8e6bf;
+    --green-pale: #e8f7ee;
+    --white: #ffffff;
+    --off-white: #f4faf6;
+    --charcoal: #1c1c1c;
+    --gray: #6b7b72;
+    --gray-light: #d4e4da;
+    --accent: #f0c040;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 999;
+    background: rgba(26,74,46,0.97);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 2px;
+    color: var(--white);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo span { color: var(--green-bright); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--green-light); text-decoration: none;
+    font-size: 13px; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--green-bright); color: var(--white);
+    border: none; padding: 10px 24px; border-radius: 4px;
+    font-weight: 600; font-size: 13px; cursor: pointer;
+    letter-spacing: 0.5px; transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--charcoal); }
+
+  /* ── HERO ── */
+  #home {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--green-deep) 0%, #0e2e1a 60%, #152b1f 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; padding-top: 64px;
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 60px,
+      rgba(62,185,106,0.04) 60px,
+      rgba(62,185,106,0.04) 61px
+    );
+  }
+  .hero-content {
+    text-align: center; z-index: 1; padding: 40px 20px;
+    max-width: 800px;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; letter-spacing: 3px;
+    color: var(--green-bright); text-transform: uppercase;
+    border: 1px solid var(--green-mid); border-radius: 20px;
+    padding: 6px 18px; margin-bottom: 24px;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 130px);
+    line-height: 0.9; color: var(--white);
+    letter-spacing: 4px; margin-bottom: 8px;
+  }
+  .hero-title .highlight { color: var(--green-bright); }
+  .hero-subtitle {
+    font-size: 16px; color: var(--green-light);
+    font-weight: 300; letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .hero-city {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px; color: var(--accent);
+    letter-spacing: 2px; margin-bottom: 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--green-bright); color: var(--white);
+    border: none; padding: 16px 36px; border-radius: 4px;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    letter-spacing: 0.5px; transition: all .2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent); color: var(--charcoal); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 1.5px solid var(--green-mid); padding: 16px 36px;
+    border-radius: 4px; font-size: 15px; font-weight: 500;
+    cursor: pointer; transition: all .2s; text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--green-bright); color: var(--green-bright); }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 48px;
+    margin-top: 60px; flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px; color: var(--green-bright); line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px; color: var(--gray); letter-spacing: 2px;
+    text-transform: uppercase; margin-top: 4px;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 30px; left: 50%;
+    transform: translateX(-50%);
+    color: var(--green-mid); font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 96px 40px; }
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    color: var(--green-mid); text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1; color: var(--green-deep);
+    margin-bottom: 16px;
+  }
+  .section-desc {
+    font-size: 15px; color: var(--gray);
+    max-width: 540px; line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--off-white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center; max-width: 1100px; margin: 0 auto;
+  }
+  .about-visual {
+    background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+    border-radius: 8px; padding: 48px;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .about-feature {
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .feature-icon {
+    width: 44px; height: 44px; background: rgba(255,255,255,0.12);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .feature-text h4 { color: var(--white); font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .feature-text p { color: var(--green-light); font-size: 13px; line-height: 1.5; }
+
+  /* ── DIET CHART ── */
+  #diet { background: var(--white); }
+  .diet-container { max-width: 1100px; margin: 0 auto; }
+  .diet-tabs {
+    display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 10px 24px; border-radius: 4px;
+    border: 1.5px solid var(--gray-light);
+    background: var(--white); color: var(--gray);
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all .2s; letter-spacing: 0.5px;
+  }
+  .tab-btn.active {
+    background: var(--green-deep); color: var(--white);
+    border-color: var(--green-deep);
+  }
+  .tab-btn:hover:not(.active) { border-color: var(--green-bright); color: var(--green-bright); }
+  .diet-panel { display: none; }
+  .diet-panel.active { display: block; }
+  .meal-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .meal-card {
+    background: var(--off-white); border-radius: 8px;
+    padding: 20px; border-left: 3px solid var(--green-bright);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .meal-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(45,122,79,0.12); }
+  .meal-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--green-mid); letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .meal-name { font-size: 15px; font-weight: 600; color: var(--green-deep); margin-bottom: 4px; }
+  .meal-items { font-size: 13px; color: var(--gray); line-height: 1.6; }
+  .meal-cal {
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; color: var(--green-bright); font-weight: 500;
+  }
+  .diet-note {
+    margin-top: 24px; padding: 16px 20px;
+    background: var(--green-pale); border-radius: 6px;
+    font-size: 13px; color: var(--green-deep); line-height: 1.6;
+    border-left: 3px solid var(--green-bright);
+  }
+
+  /* ── WORKOUT SCHEDULE ── */
+  #schedule { background: var(--green-deep); }
+  #schedule .section-title { color: var(--white); }
+  #schedule .section-desc { color: var(--green-light); }
+  .schedule-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 12px; max-width: 1100px; margin: 0 auto;
+  }
+  .day-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 20px 14px;
+    text-align: center; transition: all .2s; cursor: pointer;
+  }
+  .day-card:hover, .day-card.rest-day { background: rgba(62,185,106,0.15); border-color: var(--green-bright); }
+  .day-card.rest-day { background: rgba(240,192,64,0.1); border-color: var(--accent); }
+  .day-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 2px;
+    color: var(--green-light); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .day-focus {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; color: var(--white); margin-bottom: 12px; line-height: 1.1;
+  }
+  .day-exercises { list-style: none; }
+  .day-exercises li {
+    font-size: 12px; color: var(--green-light);
+    padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    line-height: 1.4;
+  }
+  .day-exercises li:last-child { border-bottom: none; }
+  .rest-badge {
+    display: inline-block; background: var(--accent);
+    color: var(--charcoal); font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 3px; letter-spacing: 1px;
+    text-transform: uppercase; margin-top: 8px;
+  }
+
+  /* ── WORKOUT TRACKER ── */
+  #tracker { background: var(--off-white); }
+  .tracker-container { max-width: 900px; margin: 0 auto; }
+  .tracker-form {
+    background: var(--white); border-radius: 8px;
+    padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    margin-bottom: 32px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-group label {
+    display: block; font-size: 12px; font-weight: 600;
+    color: var(--green-deep); letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .form-group input, .form-group select {
+    width: 100%; padding: 12px 14px;
+    border: 1.5px solid var(--gray-light); border-radius: 4px;
+    font-size: 14px; color: var(--charcoal);
+    background: var(--off-white); transition: border-color .2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .form-group input:focus, .form-group select:focus {
+    outline: none; border-color: var(--green-bright);
+    background: var(--white);
+  }
+  .add-btn {
+    background: var(--green-bright); color: var(--white);
+    border: none; padding: 14px 32px; border-radius: 4px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: background .2s; letter-spacing: 0.5px;
+  }
+  .add-btn:hover { background: var(--green-deep); }
+  .log-table {
+    background: var(--white); border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06); overflow: hidden;
+  }
+  .log-table table { width: 100%; border-collapse: collapse; }
+  .log-table th {
+    background: var(--green-deep); color: var(--white);
+    padding: 14px 16px; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; text-align: left;
+    font-family: 'DM Mono', monospace;
+  }
+  .log-table td {
+    padding: 14px 16px; font-size: 14px;
+    border-bottom: 1px solid var(--gray-light); color: var(--charcoal);
+  }
+  .log-table tr:last-child td { border-bottom: none; }
+  .log-table tr:hover td { background: var(--green-pale); }
+  .del-btn {
+    background: none; border: 1px solid #ffb3b3; color: #e05555;
+    padding: 4px 10px; border-radius: 3px; font-size: 12px;
+    cursor: pointer; transition: all .2s;
+  }
+  .del-btn:hover { background: #e05555; color: white; }
+  .tracker-summary {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-top: 20px;
+  }
+  .summary-card {
+    background: var(--green-deep); border-radius: 8px;
+    padding: 20px; text-align: center;
+  }
+  .summary-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; color: var(--green-bright); line-height: 1;
+  }
+  .summary-label { font-size: 12px; color: var(--green-light); margin-top: 4px; letter-spacing: 1px; }
+  .empty-log {
+    padding: 40px; text-align: center; color: var(--gray);
+    font-size: 14px;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--white); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; max-width: 1000px; margin: 0 auto; align-items: start;
+  }
+  .contact-info h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; color: var(--green-deep); margin-bottom: 24px;
+  }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-bottom: 20px;
+  }
+  .contact-icon {
+    width: 40px; height: 40px; background: var(--green-pale);
+    border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .contact-item h4 { font-size: 13px; font-weight: 600; color: var(--green-deep); margin-bottom: 2px; }
+  .contact-item p { font-size: 14px; color: var(--gray); }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .contact-form input, .contact-form textarea {
+    padding: 14px; border: 1.5px solid var(--gray-light);
+    border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;
+    color: var(--charcoal); background: var(--off-white); transition: border-color .2s;
+  }
+  .contact-form input:focus, .contact-form textarea:focus {
+    outline: none; border-color: var(--green-bright); background: var(--white);
+  }
+  .contact-form textarea { height: 120px; resize: vertical; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0a1f12; color: var(--green-light);
+    text-align: center; padding: 32px 40px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; color: var(--white); letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .footer-logo span { color: var(--green-bright); }
+  footer p { font-size: 13px; color: var(--gray); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 72px 20px; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+    .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
+    .tracker-summary { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">💪 Work<span>To</span>Fit</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#diet">Diet</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#tracker">Tracker</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Join Now</button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Itarsi's No.1 Fitness Destination</div>
+    <h1 class="hero-title">Work<span class="highlight">To</span>Fit</h1>
+    <p class="hero-subtitle">Train Hard. Eat Right. Live Strong.</p>
+    <p class="hero-city">📍 ITARSI, MADHYA PRADESH</p>
+    <div class="hero-buttons">
+      <a href="#schedule" class="btn-primary">View Workout Plan</a>
+      <a href="#diet" class="btn-outline">Explore Diet Chart</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Active Members</div></div>
+      <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Expert Trainers</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Years Strong</div></div>
+      <div class="stat"><div class="stat-num">95%</div><div class="stat-label">Success Rate</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-tag">Who We Are</div>
+      <h2 class="section-title">Built For Real Results</h2>
+      <p class="section-desc">WorkToFit is Itarsi's most dedicated fitness center — combining science-backed training, personalized diet plans, and a community that keeps you going even when motivation fades.</p>
+      <p class="section-desc">Whether you're a beginner or a seasoned athlete, our trainers design programs that match your body, goals, and schedule.</p>
+      <a href="#contact" class="btn-primary">Start Your Journey</a>
+    </div>
+    <div class="about-visual">
+      <div class="about-feature">
+        <div class="feature-icon">🏋️</div>
+        <div class="feature-text">
+          <h4>Modern Equipment</h4>
+          <p>Fully equipped gym with cardio, strength, and functional training zones.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon">🥗</div>
+        <div class="feature-text">
+          <h4>Personalized Diet Plans</h4>
+          <p>Custom meal plans crafted by certified nutritionists for your specific goals.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon">📊</div>
+        <div class="feature-text">
+          <h4>Progress Tracking</h4>
+          <p>Log every workout. Track every rep. See real progress over time.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="feature-icon">🤝</div>
+        <div class="feature-text">
+          <h4>Community Driven</h4>
+          <p>Join a community of 500+ members who motivate and push each other daily.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIET CHART -->
+<section id="diet">
+  <div class="diet-container">
+    <div class="section-tag">Nutrition Guide</div>
+    <h2 class="section-title">Diet Chart</h2>
+    <p class="section-desc">Choose your goal and follow a structured daily meal plan crafted for Indian bodies and local food availability.</p>
+    <div class="diet-tabs">
+      <button class="tab-btn active" onclick="switchTab('weight-loss')">🔥 Weight Loss</button>
+      <button class="tab-btn" onclick="switchTab('muscle-gain')">💪 Muscle Gain</button>
+      <button class="tab-btn" onclick="switchTab('maintenance')">⚖️ Maintenance</button>
+      <button class="tab-btn" onclick="switchTab('veg')">🥦 Pure Veg</button>
+    </div>
+
+    <!-- Weight Loss -->
+    <div class="diet-panel active" id="weight-loss">
+      <div class="meal-grid">
+        <div class="meal-card">
+          <div class="meal-time">6:00 AM – Wake Up</div>
+          <div class="meal-name">Morning Detox</div>
+          <div class="meal-items">Warm water with lemon & jeera<br>5 soaked almonds</div>
+          <div class="meal-cal">~50 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">8:00 AM – Breakfast</div>
+          <div class="meal-name">High Protein Start</div>
+          <div class="meal-items">2 boiled eggs + 1 multigrain toast<br>1 cup green tea (no sugar)</div>
+          <div class="meal-cal">~280 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">11:00 AM – Mid Morning</div>
+          <div class="meal-name">Light Snack</div>
+          <div class="meal-items">1 banana or 1 apple<br>1 glass buttermilk (chaas)</div>
+          <div class="meal-cal">~150 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">1:30 PM – Lunch</div>
+          <div class="meal-name">Balanced Meal</div>
+          <div class="meal-items">2 roti (wheat) + 1 bowl dal<br>Sabzi + salad + curd</div>
+          <div class="meal-cal">~450 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">4:00 PM – Pre-Workout</div>
+          <div class="meal-name">Energy Boost</div>
+          <div class="meal-items">1 banana + black coffee<br>or handful of roasted chana</div>
+          <div class="meal-cal">~180 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">7:30 PM – Dinner</div>
+          <div class="meal-name">Light & Clean</div>
+          <div class="meal-items">Grilled chicken/paneer<br>1 roti + veg soup</div>
+          <div class="meal-cal">~380 kcal</div>
+        </div>
+      </div>
+      <div class="diet-note">💧 <strong>Hydration:</strong> Drink 3–4 litres of water daily. Avoid sugar, maida, fried snacks, and cold drinks. Total: ~1490 kcal/day</div>
+    </div>
+
+    <!-- Muscle Gain -->
+    <div class="diet-panel" id="muscle-gain">
+      <div class="meal-grid">
+        <div class="meal-card">
+          <div class="meal-time">6:30 AM – Wake Up</div>
+          <div class="meal-name">Morning Fuel</div>
+          <div class="meal-items">Banana smoothie with milk & oats<br>10 soaked almonds + 5 walnuts</div>
+          <div class="meal-cal">~420 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">8:30 AM – Breakfast</div>
+          <div class="meal-name">Power Breakfast</div>
+          <div class="meal-items">4 egg whites + 2 whole eggs (omelette)<br>4 slices brown bread + milk</div>
+          <div class="meal-cal">~550 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">11:00 AM – Mid Meal</div>
+          <div class="meal-name">Protein Snack</div>
+          <div class="meal-items">Paneer bhurji (100g)<br>+ 2 multigrain roti</div>
+          <div class="meal-cal">~360 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">2:00 PM – Lunch</div>
+          <div class="meal-name">Bulk Meal</div>
+          <div class="meal-items">Rice (1.5 cup) + dal + chicken curry<br>Salad + curd (1 bowl)</div>
+          <div class="meal-cal">~680 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">5:00 PM – Post Workout</div>
+          <div class="meal-name">Recovery Shake</div>
+          <div class="meal-items">Whey protein shake (1 scoop)<br>or Sattu drink with banana</div>
+          <div class="meal-cal">~280 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">8:00 PM – Dinner</div>
+          <div class="meal-name">Night Builder</div>
+          <div class="meal-items">Grilled chicken 200g + rice<br>Palak or mixed veg sabzi</div>
+          <div class="meal-cal">~580 kcal</div>
+        </div>
+      </div>
+      <div class="diet-note">🥛 <strong>Muscle Gain Tip:</strong> Aim for 1.5–2g protein per kg bodyweight. Total intake: ~2870 kcal/day. Sleep 7–8 hrs for muscle recovery.</div>
+    </div>
+
+    <!-- Maintenance -->
+    <div class="diet-panel" id="maintenance">
+      <div class="meal-grid">
+        <div class="meal-card">
+          <div class="meal-time">7:00 AM – Morning</div>
+          <div class="meal-name">Balanced Start</div>
+          <div class="meal-items">Oats with milk & honey<br>+ 2 boiled eggs</div>
+          <div class="meal-cal">~380 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">10:30 AM – Snack</div>
+          <div class="meal-name">Mid Morning</div>
+          <div class="meal-items">Seasonal fruit (1 bowl)<br>or sprouts chaat</div>
+          <div class="meal-cal">~150 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">1:30 PM – Lunch</div>
+          <div class="meal-name">Full Thali</div>
+          <div class="meal-items">2 roti + rice + dal + sabzi<br>Salad + curd</div>
+          <div class="meal-cal">~520 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">4:30 PM – Evening</div>
+          <div class="meal-name">Pre-Workout</div>
+          <div class="meal-items">Roasted chana + tea (less sugar)<br>or banana + peanut butter</div>
+          <div class="meal-cal">~200 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">7:30 PM – Dinner</div>
+          <div class="meal-name">Balanced Dinner</div>
+          <div class="meal-items">Roti + paneer/chicken sabzi<br>Soup or salad on side</div>
+          <div class="meal-cal">~450 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">9:30 PM – Night</div>
+          <div class="meal-name">Sleep Aid</div>
+          <div class="meal-items">1 glass warm turmeric milk<br>(haldi doodh)</div>
+          <div class="meal-cal">~100 kcal</div>
+        </div>
+      </div>
+      <div class="diet-note">⚖️ <strong>Maintenance Tip:</strong> Total ~1800 kcal/day. Keep calorie intake consistent with daily activity level. Exercise 4–5 days/week.</div>
+    </div>
+
+    <!-- Pure Veg -->
+    <div class="diet-panel" id="veg">
+      <div class="meal-grid">
+        <div class="meal-card">
+          <div class="meal-time">6:30 AM – Wake Up</div>
+          <div class="meal-name">Detox Start</div>
+          <div class="meal-items">Warm water + lemon + honey<br>8 almonds + 4 walnuts</div>
+          <div class="meal-cal">~120 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">8:00 AM – Breakfast</div>
+          <div class="meal-name">Protein Packed Veg</div>
+          <div class="meal-items">Moong dal chilla (3 pcs)<br>Green chutney + curd</div>
+          <div class="meal-cal">~320 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">11:00 AM – Mid Morning</div>
+          <div class="meal-name">Protein Snack</div>
+          <div class="meal-items">Sprouts chaat with lemon<br>or paneer cubes 50g</div>
+          <div class="meal-cal">~180 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">1:30 PM – Lunch</div>
+          <div class="meal-name">Power Lunch</div>
+          <div class="meal-items">2 roti + rajma/chana dal<br>Sabzi + curd + salad</div>
+          <div class="meal-cal">~480 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">4:30 PM – Snack</div>
+          <div class="meal-name">Energy Snack</div>
+          <div class="meal-items">Makhana (fox nuts) roasted<br>or sattu sharbat</div>
+          <div class="meal-cal">~160 kcal</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-time">7:30 PM – Dinner</div>
+          <div class="meal-name">Light Veg Dinner</div>
+          <div class="meal-items">Tofu/paneer sabzi + 2 roti<br>or khichdi + ghee</div>
+          <div class="meal-cal">~420 kcal</div>
+        </div>
+      </div>
+      <div class="diet-note">🌿 <strong>Veg Tip:</strong> Soy, paneer, dal, and curd are your best protein sources. Total ~1680 kcal/day. Add flaxseeds for Omega-3.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKOUT SCHEDULE -->
+<section id="schedule">
+  <div class="section-tag" style="color: var(--green-light)">Weekly Plan</div>
+  <h2 class="section-title">Workout Schedule</h2>
+  <p class="section-desc">A balanced 6-day split designed to build strength, burn fat, and improve endurance — with a well-earned rest day.</p>
+  <div class="schedule-grid">
+    <div class="day-card">
+      <div class="day-name">Mon</div>
+      <div class="day-focus">Chest & Triceps</div>
+      <ul class="day-exercises">
+        <li>Bench Press 4×10</li>
+        <li>Incline Dumbbell 3×12</li>
+        <li>Cable Flyes 3×15</li>
+        <li>Tricep Pushdown 3×12</li>
+        <li>Skull Crushers 3×10</li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Tue</div>
+      <div class="day-focus">Back & Biceps</div>
+      <ul class="day-exercises">
+        <li>Deadlift 4×8</li>
+        <li>Lat Pulldown 4×12</li>
+        <li>Seated Row 3×12</li>
+        <li>Barbell Curl 3×12</li>
+        <li>Hammer Curl 3×15</li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Wed</div>
+      <div class="day-focus">Legs & Glutes</div>
+      <ul class="day-exercises">
+        <li>Squats 4×10</li>
+        <li>Leg Press 4×12</li>
+        <li>Lunges 3×12</li>
+        <li>Leg Curl 3×15</li>
+        <li>Calf Raise 4×20</li>
+      </ul>
+    </div>
+    <div class="day-card rest-day">
+      <div class="day-name">Thu</div>
+      <div class="day-focus">Active Rest</div>
+      <ul class="day-exercises">
+        <li>30 min walk</li>
+        <li>Light stretching</li>
+        <li>Foam rolling</li>
+      </ul>
+      <div class="rest-badge">Recovery</div>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Fri</div>
+      <div class="day-focus">Shoulders & Abs</div>
+      <ul class="day-exercises">
+        <li>Overhead Press 4×10</li>
+        <li>Lateral Raises 3×15</li>
+        <li>Front Raises 3×12</li>
+        <li>Plank 3×60s</li>
+        <li>Crunches 3×20</li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Sat</div>
+      <div class="day-focus">Cardio & Core</div>
+      <ul class="day-exercises">
+        <li>Treadmill 20 min</li>
+        <li>Jump Rope 10 min</li>
+        <li>Mountain Climbers</li>
+        <li>Russian Twists</li>
+        <li>Leg Raises 3×15</li>
+      </ul>
+    </div>
+    <div class="day-card rest-day" style="background: rgba(240,192,64,0.1); border-color: var(--accent);">
+      <div class="day-name">Sun</div>
+      <div class="day-focus">Full Rest</div>
+      <ul class="day-exercises">
+        <li>Complete rest</li>
+        <li>Proper sleep</li>
+        <li>Meal prep</li>
+      </ul>
+      <div class="rest-badge">Rest Day</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKOUT TRACKER -->
+<section id="tracker">
+  <div class="tracker-container">
+    <div class="section-tag">Log Your Progress</div>
+    <h2 class="section-title">Workout Tracker</h2>
+    <p class="section-desc">Track every exercise, set, and rep. Watch your progress build over time.</p>
+
+    <div class="tracker-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="wDate">
+        </div>
+        <div class="form-group">
+          <label>Exercise</label>
+          <input type="text" id="wExercise" placeholder="e.g. Bench Press">
+        </div>
+        <div class="form-group">
+          <label>Muscle Group</label>
+          <select id="wGroup">
+            <option value="">Select</option>
+            <option>Chest</option><option>Back</option>
+            <option>Legs</option><option>Shoulders</option>
+            <option>Biceps</option><option>Triceps</option>
+            <option>Abs / Core</option><option>Cardio</option>
+            <option>Full Body</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Sets</label>
+          <input type="number" id="wSets" placeholder="e.g. 4" min="1">
+        </div>
+        <div class="form-group">
+          <label>Reps</label>
+          <input type="number" id="wReps" placeholder="e.g. 12" min="1">
+        </div>
+        <div class="form-group">
+          <label>Weight (kg)</label>
+          <input type="number" id="wWeight" placeholder="e.g. 60" min="0" step="0.5">
+        </div>
+      </div>
+      <button class="add-btn" onclick="addEntry()">+ Log Exercise</button>
+    </div>
+
+    <div class="log-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th><th>Exercise</th><th>Group</th>
+            <th>Sets</th><th>Reps</th><th>Weight</th><th>Volume</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="logBody">
+          <tr><td colspan="8" class="empty-log">No workouts logged yet. Add your first exercise above! 💪</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tracker-summary">
+      <div class="summary-card">
+        <div class="summary-num" id="totalSessions">0</div>
+        <div class="summary-label">Sessions Logged</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-num" id="totalExercises">0</div>
+        <div class="summary-label">Total Exercises</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-num" id="totalVolume">0</div>
+        <div class="summary-label">Total Volume (kg)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag">Get In Touch</div>
+  <h2 class="section-title">Join WorkToFit</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Visit Us in Itarsi</h3>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div><h4>Address</h4><p>WorkToFit Gym, Main Road,<br>Itarsi, Madhya Pradesh – 461111</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div><h4>Phone</h4><p>+91 98765 43210</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⏰</div>
+        <div><h4>Gym Hours</h4><p>Mon–Sat: 5:00 AM – 10:00 PM<br>Sunday: 6:00 AM – 12:00 PM</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💰</div>
+        <div><h4>Membership</h4><p>Monthly: ₹799 | Quarterly: ₹2099<br>Annual: ₹6499 (Best Value)</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <input type="text" placeholder="Your Name">
+        <input type="tel" placeholder="Mobile Number">
+        <input type="email" placeholder="Email Address">
+        <select style="padding:14px; border:1.5px solid var(--gray-light); border-radius:4px; font-size:14px; color:var(--charcoal); background:var(--off-white); font-family:'Inter',sans-serif;">
+          <option>Select Your Goal</option>
+          <option>Weight Loss</option>
+          <option>Muscle Gain</option>
+          <option>General Fitness</option>
+          <option>Athletic Training</option>
+        </select>
+        <textarea placeholder="Any specific requirements or questions?"></textarea>
+        <button class="btn-primary" style="width:100%; padding:16px;" onclick="alert('Thank you! We will contact you shortly. 💪')">Send Message & Join Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Work<span>To</span>Fit</div>
+  <p style="margin:8px 0 4px;">Itarsi, Madhya Pradesh — Where Champions Are Made</p>
+  <p>© 2025 WorkToFit Gym. All rights reserved.</p>
+</footer>
+
+<script>
+  // Diet tab switcher
+  function switchTab(id) {
+    document.querySelectorAll('.diet-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Workout Tracker
+  let log = [];
+
+  function addEntry() {
+    const date = document.getElementById('wDate').value;
+    const exercise = document.getElementById('wExercise').value.trim();
+    const group = document.getElementById('wGroup').value;
+    const sets = parseInt(document.getElementById('wSets').value);
+    const reps = parseInt(document.getElementById('wReps').value);
+    const weight = parseFloat(document.getElementById('wWeight').value) || 0;
+
+    if (!date || !exercise || !group || !sets || !reps) {
+      alert('Please fill in all required fields!'); return;
+    }
+
+    const volume = sets * reps * weight;
+    log.push({ date, exercise, group, sets, reps, weight, volume, id: Date.now() });
+    renderLog();
+    document.getElementById('wExercise').value = '';
+    document.getElementById('wSets').value = '';
+    document.getElementById('wReps').value = '';
+    document.getElementById('wWeight').value = '';
+  }
+
+  function deleteEntry(id) {
+    log = log.filter(e => e.id !== id);
+    renderLog();
+  }
+
+  function renderLog() {
+    const tbody = document.getElementById('logBody');
+    if (log.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-log">No workouts logged yet. Add your first exercise above! 💪</td></tr>';
+    } else {
+      tbody.innerHTML = log.slice().reverse().map(e => `
+        <tr>
+          <td>${e.date}</td>
+          <td><strong>${e.exercise}</strong></td>
+          <td>${e.group}</td>
+          <td>${e.sets}</td>
+          <td>${e.reps}</td>
+          <td>${e.weight > 0 ? e.weight + ' kg' : 'Bodyweight'}</td>
+          <td>${e.volume > 0 ? e.volume + ' kg' : '—'}</td>
+          <td><button class="del-btn" onclick="deleteEntry(${e.id})">✕</button></td>
+        </tr>
+      `).join('');
+    }
+    const dates = new Set(log.map(e => e.date));
+    document.getElementById('totalSessions').textContent = dates.size;
+    document.getElementById('totalExercises').textContent = log.length;
+    const vol = log.reduce((s, e) => s + e.volume, 0);
+    document.getElementById('totalVolume').textContent = vol > 0 ? vol.toLocaleString() : 0;
+  }
+
+  // Set today's date by default
+  document.getElementById('wDate').valueAsDate = new Date();
+</script>
+</body>
+</html>
